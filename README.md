@@ -22,6 +22,12 @@ cd web
 npm run build && npx vercel deploy dist --prod --yes --project whitechain-welcome
 ```
 
+Kod: https://github.com/erdemasik001/whitechain-welcome. Kontratların kullandığı kütüphaneler (forge-std, OpenZeppelin) git submodule olarak geliyor, o yüzden şöyle klonla:
+
+```bash
+git clone --recurse-submodules https://github.com/erdemasik001/whitechain-welcome.git
+```
+
 ## Kontrol nasıl çalışıyor
 
 Bir cüzdan bir kontratı doğrudan deploy ettiğinde (`forge create`, Remix ya da bir deploy script'i), yeni kontratın adresi sadece iki şeye bağlıdır: cüzdan adresi ve deploy işleminin nonce'u.
