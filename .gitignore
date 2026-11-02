@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 .vercel/
+# Token file `vercel link` writes here; keep it out of git
+/.env*.local
 # Vite cache from previewing design/
 .vite/
 # Empty lock files forge leaves next to deploy logs

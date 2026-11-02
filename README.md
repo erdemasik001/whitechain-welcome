@@ -15,12 +15,7 @@ Arada bir sunucu yok. Kontrolü rozet kontratı kendisi yapıyor.
 
 Owner: `0x1d0025988EFDFef4A7Fd016571c8ed0E9aF8FEe3`. Sitenin `web/.env` dosyasındaki `VITE_BADGE_ADDRESS` bu rozet adresi.
 
-Site: **https://whitechain-welcome.vercel.app** (Vercel projesi `whitechain-welcome`). Siteyi güncellemek için:
-
-```bash
-cd web
-npm run build && npx vercel deploy dist --prod --yes --project whitechain-welcome
-```
+Site: **https://whitechain-welcome.vercel.app** (Vercel projesi `whitechain-welcome`). Vercel bu repoya bağlı: `main` dalına her push'ta siteyi kendisi derleyip yayınlar. `web/` ya da `vercel.json` değişmediyse (örneğin sadece kontratlar değiştiyse) derlemeyi atlar. Derleme ayarları `vercel.json` dosyasında; yayındaki rozet adresi `web/.env.production` dosyasında.
 
 Kod: https://github.com/erdemasik001/whitechain-welcome. Kontratların kullandığı kütüphaneler (forge-std, OpenZeppelin) git submodule olarak geliyor, o yüzden şöyle klonla:
 
