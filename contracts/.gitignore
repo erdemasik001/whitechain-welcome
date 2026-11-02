@@ -1,0 +1,7 @@
+cache/
+out/
+.env
+
+# Local and dry-run deploy logs; real Whitechain deploys (broadcast/*/1874) stay
+broadcast/*/31337/
+broadcast/**/dry-run/

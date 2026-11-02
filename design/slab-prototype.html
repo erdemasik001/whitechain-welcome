@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slab Badge Prototype</title>
+<style>
+  :root { --navy: #07081F; --blue: #0044FF; --line: #E3E8EF; --text-2: #4A5567; }
+  body { margin: 0; background: #fff; color: var(--navy); font: 15px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p { margin: 0 0 24px; color: var(--text-2); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+  figure { margin: 0; }
+  figcaption { margin-top: 10px; font-size: 13px; color: var(--text-2); }
+  .plain img { width: 100%; display: block; border: 1px solid var(--line); }
+  .tilt { perspective: 1200px; }
+  .tilt-inner { position: relative; transition: transform .15s ease-out; transform-style: preserve-3d; will-change: transform; }
+  .tilt-inner img { width: 100%; display: block; }
+  /* Pointer-following shine, clipped to the case (case = x 12–88%, y 2.9–97.1% of the image) */
+  .shine { position: absolute; left: 12%; right: 12%; top: 2.9%; bottom: 2.9%; border-radius: 7% / 4.5%;
+           background: radial-gradient(circle at var(--x, 50%) var(--y, 30%), rgb(255 255 255 / .55), transparent 45%);
+           mix-blend-mode: soft-light; pointer-events: none; opacity: 0; transition: opacity .2s; }
+  .tilt:hover .shine { opacity: 1; }
+  /* Same pointer-following hologram as the site (web/src/styles.css .nft-holo) */
+  .holo { position: absolute; left: 20.6%; top: 29.43%; width: 58.8%; height: 62.29%; border-radius: 4.1% / 2.75%;
+          background: repeating-linear-gradient(115deg, #ff8ad8 0%, #7fe3ff 7%, #a6ffb8 14%, #fff38a 21%, #ffb38a 28%, #c8a2ff 35%, #ff8ad8 42%);
+          background-size: 300% 300%; background-position: var(--x, 50%) var(--y, 50%);
+          mix-blend-mode: multiply; opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .tilt:hover .holo { opacity: .5; }
+  .controls { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 24px; }
+  .controls label { display: grid; gap: 4px; font-size: 13px; color: var(--text-2); }
+  .controls input { font: 14px Menlo, monospace; padding: 6px 8px; border: 1px solid #C7D0DC; border-radius: 8px; min-width: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Slab badge prototype</h1>
+  <p>Left: the NFT image exactly as wallets and the explorer would show it (an on-chain SVG, the hologram and the glare are built in). Right: the same image on the website, tilting in 3D with the mouse.</p>
+  <div class="controls">
+    <label>Badge no <input id="id" value="1" size="6"></label>
+    <label>First contract <input id="addr" value="0x6d1A36885424c41FaCdA6A51b47Fcdf1e1EF9901" size="44"></label>
+  </div>
+  <div class="grid">
+    <figure class="plain"><img id="img1" alt="Badge"><figcaption>Wallet / explorer view (on-chain SVG)</figcaption></figure>
+    <figure class="tilt" id="tilt"><div class="tilt-inner" id="tiltInner"><img id="img2" alt="Badge"><span class="holo"></span><span class="shine"></span></div><figcaption>Website view (move the mouse over it)</figcaption></figure>
+  </div>
+</main>
+<script type="module">
+import { slabSvg } from './slab.mjs';
+const claimedAt = Math.floor(Date.now() / 1000);
+function render() {
+  const svg = slabSvg({ tokenId: document.getElementById('id').value || '1', firstContract: document.getElementById('addr').value, claimedAt });
+  const url = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+  document.getElementById('img1').src = url;
+  document.getElementById('img2').src = url;
+}
+document.querySelectorAll('input').forEach((el) => el.addEventListener('input', render));
+render();
+const tilt = document.getElementById('tilt'), inner = document.getElementById('tiltInner');
+tilt.addEventListener('pointermove', (e) => {
+  const r = inner.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+  inner.style.transform = `rotateY(${(px - .5) * 16}deg) rotateX(${(.5 - py) * 16}deg)`;
+  inner.style.setProperty('--x', `${px * 100}%`);
+  inner.style.setProperty('--y', `${py * 100}%`);
+});
+tilt.addEventListener('pointerleave', () => { inner.style.transform = ''; });
+</script>
+</body>
+</html>

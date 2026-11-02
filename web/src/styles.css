@@ -1,0 +1,1006 @@
+/*
+ * Blue and white, in the style of whitechain.io: white page, thin grey grid lines, flat
+ * Whitechain blue (#0044FF, from the official logo) for actions and accents, navy text,
+ * a dot-grid pattern and small blue squares. No gradients or glows.
+ * The page structure (headline, tilted badge card stack, bottom band) comes from the
+ * "NFT Marketplace Website (free)" Figma Community kit.
+ */
+
+:root {
+  /* Whitechain palette (from whitechain.io) */
+  --wc-blue: #0044ff; /* the blue in the official logo */
+  --wc-blue-dark: #0039d6;
+  --wc-blue-2: #3369ff;
+  --wc-ink: #07081e;
+  --wc-text-2: #4a5567;
+  --wc-icon-muted: #6a6a72;
+  --wc-surface-2: #e3e8ef;
+  --wc-border: #c7d0dc;
+  --wc-bg: #f8faf9;
+  --wc-error: #e24137;
+  --wc-warning: #ed7536;
+
+  /* Roles */
+  --bg: #ffffff;
+  --bg-soft: var(--wc-bg);
+  --line: var(--wc-surface-2);
+  --line-strong: var(--wc-border);
+  --text: var(--wc-ink);
+  --text-2: var(--wc-text-2);
+  --text-3: var(--wc-icon-muted);
+  --accent: var(--wc-blue);
+  --accent-hover: var(--wc-blue-dark);
+  /* Light blue wash for the active step and soft fills */
+  --accent-soft: rgb(0 68 255 / 0.06);
+  /* Whitechain's error and warning colors are too light for small text on white;
+     these are darker shades of the same hues. */
+  --danger: #c0281f;
+  --warn: #b5501d;
+
+  --radius-card: 20px;
+  --radius-control: 14px;
+  --radius-small: 10px;
+  --container: 1280px;
+  --gutter: clamp(16px, 5vw, 64px);
+
+  --font: 'Onest Variable', 'Onest', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.92em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Page frame: a centered column with thin side lines, like whitechain.io ---------- */
+
+.page {
+  max-width: var(--container);
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-inline: 1px solid var(--line);
+  background: var(--bg);
+  overflow: clip;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'brand nav actions';
+  align-items: center;
+  gap: 32px;
+  min-height: 72px;
+  padding: 12px var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--text);
+}
+
+/* Official logo (public/whitechain-logo.svg); the width follows from the height. */
+.brand picture {
+  display: flex;
+  flex: none;
+}
+
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 30px;
+}
+
+.brand-sub {
+  padding-left: 10px;
+  border-left: 1px solid var(--line-strong);
+  color: var(--text-3);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.topnav {
+  grid-area: nav;
+  display: flex;
+  gap: 28px;
+}
+
+.topnav a {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topnav a:hover {
+  color: var(--accent);
+}
+
+.topbar-actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chip,
+.lang button {
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-small);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+}
+
+.chip:hover {
+  border-color: var(--text);
+}
+
+/* Whitechain's small blue square, used as the "connected" marker */
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+.chip-action {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.chip:hover .chip-action {
+  color: var(--danger);
+}
+
+.lang {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.lang button {
+  min-width: 44px;
+  padding: 0 10px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.lang button:hover {
+  color: var(--text);
+}
+
+.lang button.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* ---------- Main layout ---------- */
+
+.layout {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
+  grid-template-areas:
+    'intro art'
+    'flow art';
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(40px, 6vw, 96px);
+  row-gap: 48px;
+  padding: clamp(48px, 7vw, 96px) var(--gutter) 88px;
+}
+
+/* whitechain.io's dot grid, behind the badge side of the hero */
+.layout::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 720px;
+  background-image: radial-gradient(circle, var(--line-strong) 1.1px, transparent 1.6px);
+  background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 45%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 45%, #000 45%, transparent 100%);
+  pointer-events: none;
+}
+
+.intro {
+  grid-area: intro;
+  display: grid;
+  gap: 22px;
+  align-content: start;
+}
+
+.flow {
+  grid-area: flow;
+}
+
+.art {
+  grid-area: art;
+}
+
+h1 {
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h1 .accent {
+  color: var(--accent);
+}
+
+/* The kit's small uppercase line under the headline, with Whitechain's blue square */
+.tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tagline::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: var(--accent);
+}
+
+.lead {
+  max-width: 56ch;
+  color: var(--text-2);
+  font-size: 17px;
+}
+
+.intro-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  color: var(--text-3);
+  font-size: 15px;
+}
+
+/* ---------- Steps card ---------- */
+
+.card {
+  padding: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 14px 16px;
+}
+
+.card-head h2 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.card-head p {
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+.icon-circle {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-small);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  column-gap: 14px;
+  row-gap: 16px;
+  align-items: center;
+  padding: 16px 18px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--bg-soft);
+}
+
+.step--active {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.step-marker {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-small);
+  background: var(--bg);
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.step--active .step-marker {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.step--done .step-marker {
+  border-color: var(--text);
+  background: var(--text);
+  color: #ffffff;
+}
+
+.step-head {
+  min-width: 0;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.step-hint {
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+.step-status {
+  font-family: var(--mono);
+  font-size: 13px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.step--done .step-status {
+  color: var(--text);
+}
+
+.step--active .step-status {
+  color: var(--accent);
+}
+
+.step--locked .step-status {
+  color: var(--text-3);
+}
+
+.step--locked .step-title,
+.step--locked .step-hint {
+  opacity: 0.55;
+}
+
+.step-content {
+  grid-column: 2 / -1;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* ---------- Controls ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  color: #ffffff;
+}
+
+.btn--large {
+  height: 56px;
+  padding: 0 34px;
+  font-size: 17px;
+  font-weight: 600;
+  justify-self: start;
+}
+
+.btn--secondary,
+.btn--outline,
+.btn--wallet {
+  border-color: var(--line-strong);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.btn--secondary:hover:not(:disabled),
+.btn--outline:hover,
+.btn--wallet:hover:not(:disabled) {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.btn--outline {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.btn--wallet {
+  padding: 0 20px 0 14px;
+}
+
+.btn--wallet img {
+  border-radius: 6px;
+}
+
+.wallets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.address-form {
+  display: flex;
+  gap: 8px;
+}
+
+/* Step 3: the way to the faucet, under the claim button */
+.faucet {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.faucet .status {
+  flex-basis: 100%;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.input::placeholder {
+  color: var(--text-3);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(0 68 255 / 0.15);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--wc-error);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgb(255 255 255 / 0.35);
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Messages ---------- */
+
+.status {
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+.status--ok {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.note {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+.note--error {
+  border-color: rgb(226 65 55 / 0.4);
+  background: rgb(226 65 55 / 0.05);
+  color: var(--danger);
+}
+
+.note--warn {
+  border-color: rgb(237 117 54 / 0.45);
+  background: rgb(237 117 54 / 0.06);
+  color: var(--warn);
+}
+
+.note a {
+  color: inherit;
+}
+
+/* ---------- Badge: the slab image from the contract, tilting under the pointer ---------- */
+
+.nft {
+  position: sticky;
+  top: 32px;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.nft-stage {
+  width: min(440px, 100%);
+  /* The shadow follows the clipped case outline. */
+  filter: drop-shadow(0 18px 28px rgb(7 8 31 / 0.16));
+}
+
+.nft-slab {
+  position: relative;
+  clip-path: url(#slab-clip);
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.2s ease-out;
+}
+
+.nft-slab img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1000 / 1400;
+}
+
+/* Light catching the acrylic where the pointer is */
+.nft-shine {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 30%), rgb(255 255 255 / 0.6), transparent 40%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.nft-stage:hover .nft-shine {
+  opacity: 1;
+}
+
+/* Holographic rainbow over the card inside the case (card: x 206–794, y 412–1284 of the
+   1000 × 1400 image). It slides with the pointer, so the colors shift as the slab tilts. */
+.nft-holo {
+  position: absolute;
+  left: 20.6%;
+  top: 29.43%;
+  width: 58.8%;
+  height: 62.29%;
+  border-radius: 4.1% / 2.75%;
+  background: repeating-linear-gradient(
+    115deg,
+    #ff8ad8 0%,
+    #7fe3ff 7%,
+    #a6ffb8 14%,
+    #fff38a 21%,
+    #ffb38a 28%,
+    #c8a2ff 35%,
+    #ff8ad8 42%
+  );
+  background-size: 300% 300%;
+  background-position: var(--shine-x, 50%) var(--shine-y, 50%);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.nft-stage:hover .nft-holo {
+  opacity: 0.5;
+}
+
+.nft-clip {
+  position: absolute;
+}
+
+.nft-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(334px, 76%);
+  margin: 0;
+  border-block: 1px solid var(--line);
+}
+
+.nft-stats div {
+  padding: 10px 4px;
+}
+
+.nft-stats div + div {
+  padding-left: 16px;
+  border-left: 1px solid var(--line);
+}
+
+.nft-stats dt {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.nft-stats dd {
+  margin: 2px 0 0;
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.nft--owned .nft-stats div:last-child dd {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.nft figcaption {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* ---------- Success ---------- */
+
+.success {
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+}
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-control);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.success-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.success h2 {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.success > p {
+  color: var(--text-2);
+}
+
+.success-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.success-next {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--bg-soft);
+}
+
+.success-next h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.success-next p {
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+/* ---------- Bottom band: network facts on Whitechain blue ---------- */
+
+.strip {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.facts > div {
+  padding: 32px var(--gutter);
+  border-left: 1px solid rgb(255 255 255 / 0.22);
+}
+
+.facts > div:first-child {
+  border-left: 0;
+}
+
+.facts dt {
+  color: rgb(255 255 255 / 0.8);
+  font-size: 14px;
+}
+
+.facts dd {
+  margin: 4px 0 0;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 1180px) {
+  .brand-sub {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'brand actions'
+      'nav nav';
+    row-gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  .topnav {
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'intro'
+      'art'
+      'flow';
+    grid-template-rows: auto;
+    padding-top: 40px;
+  }
+
+  .layout::before {
+    width: 100%;
+    height: 1100px;
+  }
+
+  .nft {
+    position: relative;
+    top: 0;
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .facts > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .facts > div:nth-child(n + 3) {
+    border-top: 1px solid rgb(255 255 255 / 0.22);
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    border-inline: 0;
+  }
+
+  .layout {
+    row-gap: 36px;
+    padding-bottom: 56px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .chip-action {
+    display: none;
+  }
+
+  .card {
+    padding: 6px;
+  }
+
+  .step {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    column-gap: 12px;
+    padding: 14px 14px 14px 12px;
+  }
+
+  .step-marker {
+    width: 36px;
+    height: 36px;
+  }
+
+  .step-content {
+    grid-column: 1 / -1;
+  }
+
+  .address-form {
+    flex-direction: column;
+  }
+
+  .btn--large {
+    width: 100%;
+  }
+
+
+  .facts > div {
+    padding: 22px var(--gutter);
+  }
+
+  .facts dd {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 420px) {
+  /* The header swaps to the icon-only logo here (see Header.tsx) to leave room for the
+     wallet chip and language switch. */
+  .lang button {
+    min-width: 40px;
+    padding: 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+
+  .btn {
+    transition: none;
+  }
+
+  /* The slab stays flat; the hologram colors still follow the pointer. */
+  .nft-slab {
+    transform: none;
+  }
+}

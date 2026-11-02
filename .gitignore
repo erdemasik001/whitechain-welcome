@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+.vercel/
+# Vite cache from previewing design/
+.vite/
+# Empty lock files forge leaves next to deploy logs
+*.recovery.lock
