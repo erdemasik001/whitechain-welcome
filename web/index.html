@@ -6,6 +6,14 @@
     <meta name="description" content="Whitechain'de ilk kontratını deploy ettiysen hoş geldin rozetini al." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#ffffff" />
+    <script>
+      // Apply the saved (or system) theme before first paint, so dark mode never flashes white.
+      try {
+        var t = localStorage.getItem('welcome-theme')
+        if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
     <title>Welcome to Whitechain</title>
   </head>
   <body>

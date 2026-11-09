@@ -24,6 +24,7 @@ const tr = {
   installWallet: "MetaMask'i indir",
   connectedAs: '{address} bağlı',
   disconnect: 'Çıkış',
+  darkMode: 'Koyu mod',
   wrongNetwork: "Cüzdanın başka bir ağda. Devam etmek için Whitechain Sepolia'ya geç.",
   switchNetwork: "Whitechain Sepolia'ya geç",
 
@@ -106,6 +107,7 @@ const en: Strings = {
   installWallet: 'Get MetaMask',
   connectedAs: '{address} connected',
   disconnect: 'Disconnect',
+  darkMode: 'Dark mode',
   wrongNetwork: 'Your wallet is on another network. Switch to Whitechain Sepolia to continue.',
   switchNetwork: 'Switch to Whitechain Sepolia',
 

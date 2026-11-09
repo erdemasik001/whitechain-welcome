@@ -48,6 +48,79 @@
   color-scheme: light;
 }
 
+/* ---------- Dark theme: same roles, navy surfaces. Toggled via <html data-theme="dark">. ---------- */
+
+:root[data-theme='dark'] {
+  --bg: #0b0d24;
+  --bg-soft: #11142d;
+  --line: #1f2442;
+  --line-strong: #323964;
+  --text: #eef1fb;
+  --text-2: #aab3c9;
+  --text-3: #8089a3;
+  --accent: #2f66ff;
+  --accent-hover: #5582ff;
+  --accent-soft: rgb(47 102 255 / 0.14);
+  --danger: #ff7d73;
+  --warn: #ffa56b;
+  color-scheme: dark;
+}
+
+:root[data-theme='dark'] .nft-stage {
+  filter: drop-shadow(0 18px 28px rgb(0 0 0 / 0.5));
+}
+
+/* Theme switch, left of the language buttons */
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.theme-track {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.theme-switch[aria-checked='true'] .theme-track {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.theme-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  transition: transform 0.2s;
+}
+
+.theme-switch[aria-checked='true'] .theme-thumb {
+  transform: translateX(24px);
+  background: #ffffff;
+  color: var(--wc-ink);
+}
+
+.theme-thumb svg {
+  width: 12px;
+  height: 12px;
+}
+
 *,
 *::before,
 *::after {
@@ -424,7 +497,7 @@ h1 .accent {
 .step--done .step-marker {
   border-color: var(--text);
   background: var(--text);
-  color: #ffffff;
+  color: var(--bg);
 }
 
 .step-head {
